@@ -1,4 +1,8 @@
-module www.velocidex.com/golang/evtx
+// Modifications made by Expel, Inc.
+// Modifications made:
+// - Changed module to "github.com/expel-io/evtx"
+
+module github.com/expel-io/evtx
 
 require (
 	github.com/Velocidex/ordereddict v0.0.0-20191106020901-97c468e5e403
