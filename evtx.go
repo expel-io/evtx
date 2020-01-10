@@ -13,6 +13,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
+/*
+	Modifications by Expel, Inc.
+
+	Modifications made:
+	- Made the function readStructFromFile() into a public function ReadStructFromFile()
+*/
 package evtx
 
 import (
@@ -618,7 +625,7 @@ func ParseTemplateInstance(ctx *ParseContext) bool {
 			arg_values[idx] = ctx.ConsumeBytes(arg.argLen)
 		case 0x0f: // GUID
 			guid := EvtxGUID{}
-			readStructFromFile(
+			ReadStructFromFile(
 				bytes.NewReader(ctx.ConsumeBytes(arg.argLen)), 0,
 				&guid)
 			arg_values[idx] = guid.ToString()
@@ -750,7 +757,7 @@ func ParseBinXML(ctx *ParseContext) {
 func GetChunks(fd io.ReadSeeker) ([]*Chunk, error) {
 	result := []*Chunk{}
 	header := EVTXHeader{}
-	err := readStructFromFile(fd, 0, &header)
+	err := ReadStructFromFile(fd, 0, &header)
 	if err != nil {
 		return nil, err
 	}
@@ -784,7 +791,7 @@ func GetChunks(fd io.ReadSeeker) ([]*Chunk, error) {
 
 func ParseFile(fd io.ReadSeeker) (*ordereddict.Dict, error) {
 	header := EVTXHeader{}
-	err := readStructFromFile(fd, 0, &header)
+	err := ReadStructFromFile(fd, 0, &header)
 	if err != nil {
 		return nil, err
 	}
@@ -821,7 +828,7 @@ func ParseFile(fd io.ReadSeeker) (*ordereddict.Dict, error) {
 	return nil, nil
 }
 
-func readStructFromFile(fd io.ReadSeeker, offset int64, obj interface{}) error {
+func ReadStructFromFile(fd io.ReadSeeker, offset int64, obj interface{}) error {
 	_, err := fd.Seek(offset, os.SEEK_SET)
 	if err != nil {
 		return errors.Wrap(err, "Seek")
