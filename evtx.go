@@ -19,6 +19,7 @@
 
 	Modifications made:
 	- Made the function readStructFromFile() into a public function ReadStructFromFile()
+	- Changed Chunk.Parse to return a slice of data instead of a slice of pointers
 */
 package evtx
 
@@ -125,8 +126,8 @@ type Chunk struct {
 	Fd     io.ReadSeeker
 }
 
-func (self *Chunk) Parse(start_record_id int) ([]*EventRecord, error) {
-	result := []*EventRecord{}
+func (self *Chunk) Parse(start_record_id int) ([]EventRecord, error) {
+	result := []EventRecord{}
 	buf := make([]byte, EVTX_CHUNK_SIZE)
 	_, err := self.Fd.Seek(self.Offset, os.SEEK_SET)
 	if err != nil {
@@ -154,7 +155,7 @@ func (self *Chunk) Parse(start_record_id int) ([]*EventRecord, error) {
 		// define templates we need.
 		record.Parse(ctx)
 		if int(record.Header.RecordID) >= start_record_id {
-			result = append(result, record)
+			result = append(result, *record)
 		}
 
 		ctx.SetOffset(start_of_record + int(record.Header.Size))
