@@ -1,7 +1,3 @@
-// Modifications made by Expel, Inc.
-// Modifications made:
-// - Changed module to "github.com/expel-io/evtx"
-
 module github.com/expel-io/evtx
 
 require (
