@@ -5,7 +5,6 @@
 module github.com/expel-io/evtx
 
 require (
-	github.com/Go-Forensics/BinaryTransforms v1.3.1
 	github.com/Velocidex/ordereddict v0.0.0-20191106020901-97c468e5e403
 	github.com/davecgh/go-spew v1.1.1
 	github.com/mattn/go-sqlite3 v1.11.0
